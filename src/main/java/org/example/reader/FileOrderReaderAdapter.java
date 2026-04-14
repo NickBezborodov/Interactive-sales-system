@@ -1,18 +1,13 @@
 package org.example.reader;
 
-import org.example.model.Order;
-import java.util.List;
+public class FileOrderReaderAdapter {
 
-public class FileOrderReaderAdapter implements OrderReader {
+    public OrderReader getReader(String filePath) {
 
-    @Override
-    public List<Order> readOrders(String filePath) {
-        OrderReader reader;
         if (filePath.endsWith(".txt")) {
-            reader = new TxtOrderReader();
+            return new TxtOrderReader();
         } else {
-            reader = new HashOrderReader();
+            return new HashOrderReader();
         }
-        return reader.readOrders(filePath);
     }
 }
