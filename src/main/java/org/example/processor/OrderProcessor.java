@@ -10,9 +10,16 @@ import java.util.stream.Collectors;
 
 public class OrderProcessor {
 
-    private static final double PRICE_PER_KG = 10.0;
-    private static final double START_DISCOUNT_PERCENT = 50.0;
-    private static final double DISCOUNT_STEP_PERCENT = 5.0;
+    private final double pricePerKg;
+    private final double startDicsountPercent;
+    private final double discountStepPercent;
+
+    public OrderProcessor(double pricePerKg, double startDicsountPercent, double discountStepPercent) {
+
+        this.pricePerKg = pricePerKg;
+        this.startDicsountPercent = startDicsountPercent;
+        this.discountStepPercent = discountStepPercent;
+    }
 
 
     public List<OrderResult> calculateCosts(List<Order> orders) {
@@ -20,16 +27,16 @@ public class OrderProcessor {
         // 1. Сортируем заказы по времени
         List<Order> sortedOrders = orders.stream()
                 .sorted(Comparator.comparing(Order::getTimestamp))
-                .collect(Collectors.toList());
+                .toList();
 
 
         List<OrderResult> results = new ArrayList<>();
 
-        double currentDiscount = START_DISCOUNT_PERCENT;
+        double currentDiscount = startDicsountPercent;
 
         for (Order order : sortedOrders) {
             // Считаем стоимость без скидки
-            double costWithoutDiscount = order.getQuantityKg() * PRICE_PER_KG;
+            double costWithoutDiscount = order.getQuantityKg() * pricePerKg;
 
             // применил скидку
             double finalCost = costWithoutDiscount * (1 - currentDiscount / 100);
@@ -39,7 +46,7 @@ public class OrderProcessor {
             results.add(result);
 
             // Уменьшаем скидку для следующего заказа
-            currentDiscount = currentDiscount - DISCOUNT_STEP_PERCENT;
+            currentDiscount = currentDiscount - discountStepPercent;
             if (currentDiscount < 0) {
                 currentDiscount = 0;
             }
