@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 public class TxtOrderReader implements OrderReader {
 
     private static final DateTimeFormatter FORMATTER =
-            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 
     @Override
     public List<Order> readOrders(String filePath) {
@@ -29,7 +29,7 @@ public class TxtOrderReader implements OrderReader {
 
                         return new Order(timestamp, company, quantity);
                     })
-                    .collect(Collectors.toList());
+                    .toList();
         } catch (IOException e) {
             throw new IORuntimeException("Ошибка чтения файла: " + filePath, e);
         }
