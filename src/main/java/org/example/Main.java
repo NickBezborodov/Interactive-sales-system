@@ -20,10 +20,9 @@ public class Main {
 
 
         FileOrderReaderAdapter adapter = new FileOrderReaderAdapter();
-        OrderProcessor processor = new OrderProcessor(pricePerKg, startDiscount, discountStep);
         OrderFileWriter writer = new OrderFileWriter();
-        OrderManager manager = new OrderManager(adapter, writer, processor);
-        manager.processOrders(inputFile, outputFile);
+        OrderManager manager = new OrderManager(adapter, writer);
+        manager.processOrders(inputFile, outputFile, pricePerKg, startDiscount, discountStep);
         System.out.println("Обработка завершена. Результат сохранён в " + outputFile);
 
     }

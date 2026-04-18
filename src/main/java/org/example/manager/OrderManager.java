@@ -15,17 +15,17 @@ public class OrderManager {
     private final OrderFileWriter writer;
     private final OrderProcessor processor;
 
-    public OrderManager(FileOrderReaderAdapter adapter, OrderFileWriter writer, OrderProcessor processor) {
+    public OrderManager(FileOrderReaderAdapter adapter, OrderFileWriter writer) {
         this.adapter = adapter;
         this.writer = writer;
-        this.processor = processor;
+        this.processor = new OrderProcessor();
     }
 
-    public void processOrders(String inputFile, String outputFile) {
+    public void processOrders(String inputFile, String outputFile, double priceKg, double startDiscount, double discountStep) {
 
         OrderReader reader = adapter.getReader(inputFile);
         List<Order> orders = reader.readOrders(inputFile);
-        List<OrderResult> results = processor.calculateCosts(orders);
+        List<OrderResult> results = processor.calculateCosts(orders, priceKg, discountStep, startDiscount);
         writer.writeResult(results, outputFile);
     }
 

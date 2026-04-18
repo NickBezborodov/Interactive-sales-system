@@ -6,23 +6,16 @@ import org.example.model.OrderResult;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class OrderProcessor {
 
-    private final double pricePerKg;
-    private final double startDicsountPercent;
-    private final double discountStepPercent;
-
-    public OrderProcessor(double pricePerKg, double startDicsountPercent, double discountStepPercent) {
-
-        this.pricePerKg = pricePerKg;
-        this.startDicsountPercent = startDicsountPercent;
-        this.discountStepPercent = discountStepPercent;
+    public OrderProcessor() {
     }
 
-
-    public List<OrderResult> calculateCosts(List<Order> orders) {
+    public List<OrderResult> calculateCosts(List<Order> orders,
+                                            double priceKg,
+                                            double startDicsountPercent,
+                                            double discountStepPercent) {
 
         // 1. Сортируем заказы по времени
         List<Order> sortedOrders = orders.stream()
@@ -36,7 +29,7 @@ public class OrderProcessor {
 
         for (Order order : sortedOrders) {
             // Считаем стоимость без скидки
-            double costWithoutDiscount = order.getQuantityKg() * pricePerKg;
+            double costWithoutDiscount = order.getQuantityKg() * priceKg;
 
             // применил скидку
             double finalCost = costWithoutDiscount * (1 - currentDiscount / 100);
