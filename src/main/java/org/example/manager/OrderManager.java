@@ -15,10 +15,10 @@ public class OrderManager {
     private final OrderFileWriter writer;
     private final OrderProcessor processor;
 
-    public OrderManager(FileOrderReaderAdapter adapter, OrderFileWriter writer) {
+    public OrderManager(FileOrderReaderAdapter adapter, OrderProcessor processor, OrderFileWriter writer) {
         this.adapter = adapter;
         this.writer = writer;
-        this.processor = new OrderProcessor();
+        this.processor = processor;
     }
 
     public void processOrders(String inputFile, String outputFile, double priceKg, double startDiscount, double discountStep) {

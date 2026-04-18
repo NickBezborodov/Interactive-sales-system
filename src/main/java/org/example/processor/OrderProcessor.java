@@ -9,8 +9,6 @@ import java.util.List;
 
 public class OrderProcessor {
 
-    public OrderProcessor() {
-    }
 
     public List<OrderResult> calculateCosts(List<Order> orders,
                                             double priceKg,
