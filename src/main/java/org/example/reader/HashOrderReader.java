@@ -12,9 +12,6 @@ import java.util.List;
 
 public class HashOrderReader implements OrderReader {
 
-    private static final DateTimeFormatter FORMATTER =
-            DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
-
 
     @Override
     public List<Order> readOrders(String filePath) {

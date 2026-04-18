@@ -13,8 +13,6 @@ import java.util.stream.Collectors;
 
 public class TxtOrderReader implements OrderReader {
 
-    private static final DateTimeFormatter FORMATTER =
-            DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 
     @Override
     public List<Order> readOrders(String filePath) {
