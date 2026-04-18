@@ -25,7 +25,7 @@ public class OrderManager {
 
         OrderReader reader = adapter.getReader(inputFile);
         List<Order> orders = reader.readOrders(inputFile);
-        List<OrderResult> results = processor.calculateCosts(orders, priceKg, discountStep, startDiscount);
+        List<OrderResult> results = processor.calculateCosts(orders, priceKg, startDiscount, discountStep);
         writer.writeResult(results, outputFile);
     }
 
