@@ -93,7 +93,7 @@ public class OrderProcessorTest {
     }
 
     @Test
-    void WhenStartDiscountIsZero() {
+    void whenStartDiscountIsZero() {
         Order order1 = createOrder(8, "First", 100);
         Order order2 = createOrder(9, "Second", 200);
 
@@ -107,7 +107,7 @@ public class OrderProcessorTest {
     }
 
     @Test
-    void WhenPriceNegative() {
+    void whenPriceNegative() {
         Order order = createOrder(8, "First", 100);
 
         List<Order> orders = List.of(order);
@@ -118,7 +118,7 @@ public class OrderProcessorTest {
     }
 
     @Test
-    void WhenStartDiscountIsNegative() {
+    void whenStartDiscountIsNegative() {
         Order order = createOrder(8, "First", 100);
 
         List<Order> orders = List.of(order);
