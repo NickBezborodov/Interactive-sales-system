@@ -1,17 +1,30 @@
 package org.example;
 
-//TIP Чтобы <b>запустить</b> код, нажмите <shortcut actionId="Run"/> или
-// нажмите на значок <icon src="AllIcons.Actions.Execute"/> на полях.
-public class Main {
-    static void main() {
-        //TIP Нажмите <shortcut actionId="ShowIntentionActions"/>, когда курсор находится на подсвеченном тексте,
-        // чтобы увидеть предложения IntelliJ IDEA по исправлению.
-        IO.println(String.format("Hello and welcome!"));
+import org.example.manager.OrderManager;
+import org.example.processor.OrderProcessor;
+import org.example.reader.FileOrderReaderAdapter;
+import org.example.writer.OrderFileWriter;
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Нажмите <shortcut actionId="Debug"/>, чтобы начать отладку кода. Мы установили одну <icon src="AllIcons.Debugger.Db_set_breakpoint"/> точку останова
-            // для вас, но вы всегда можете добавить больше, нажав <shortcut actionId="ToggleLineBreakpoint"/>.
-            IO.println("i = " + i);
+public class Main {
+    public static void main(String[] args) {
+        if (args.length != 5) {
+            System.out.println("Укажите входной и выходной файлы");
+            return;
         }
+
+        String inputFile = args[0];
+        String outputFile = args[1];
+        double pricePerKg = Double.parseDouble(args[2]);
+        double startDiscount = Double.parseDouble(args[3]);
+        double discountStep = Double.parseDouble(args[4]);
+
+
+        FileOrderReaderAdapter adapter = new FileOrderReaderAdapter();
+        OrderProcessor processor = new OrderProcessor();
+        OrderFileWriter writer = new OrderFileWriter();
+        OrderManager manager = new OrderManager(adapter, processor, writer);
+        manager.processOrders(inputFile, outputFile, pricePerKg, startDiscount, discountStep);
+        System.out.println("Обработка завершена. Результат сохранён в " + outputFile);
+
     }
 }
