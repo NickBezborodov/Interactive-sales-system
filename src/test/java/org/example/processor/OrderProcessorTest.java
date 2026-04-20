@@ -3,12 +3,12 @@ package org.example.processor;
 import org.example.model.Order;
 import org.example.model.OrderResult;
 import org.junit.jupiter.api.Test;
-import org.mockito.internal.matchers.Or;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class OrderProcessorTest {
     private Order createOrder(int hour, String company, int quantity) {
@@ -91,18 +91,43 @@ public class OrderProcessorTest {
         assertEquals(0.0, results.get(2).getFinalPrice());
 
     }
+
     @Test
-    void WhenStartDiscountIsZero(){
-        Order order1 = createOrder(8,"First", 100);
+    void WhenStartDiscountIsZero() {
+        Order order1 = createOrder(8, "First", 100);
         Order order2 = createOrder(9, "Second", 200);
 
         List<Order> orders = List.of(order1, order2);
         OrderProcessor processor = new OrderProcessor();
 
-        List<OrderResult> results = processor.calculateCosts(orders,10.0, 0.0, 5.0);
+        List<OrderResult> results = processor.calculateCosts(orders, 10.0, 0.0, 5.0);
 
-        assertEquals(1000,results.get(0).getFinalPrice());
-        assertEquals(2000,results.get(1).getFinalPrice());
+        assertEquals(1000, results.get(0).getFinalPrice());
+        assertEquals(2000, results.get(1).getFinalPrice());
+    }
+
+    @Test
+    void WhenPriceNegative() {
+        Order order = createOrder(8, "First", 100);
+
+        List<Order> orders = List.of(order);
+        OrderProcessor processor = new OrderProcessor();
+
+        List<OrderResult> results = processor.calculateCosts(orders, -10.0, 10.0, 5.0);
+        assertEquals(-900.0, results.get(0).getFinalPrice());
+    }
+
+    @Test
+    void WhenStartDiscountIsNegative() {
+        Order order = createOrder(8, "First", 100);
+
+        List<Order> orders = List.of(order);
+
+        OrderProcessor processor = new OrderProcessor();
+
+        List<OrderResult> results = processor.calculateCosts(orders, 10.0, -10.0, 5.0);
+
+        assertEquals(1100.0, results.get(0).getFinalPrice());
     }
 }
 
