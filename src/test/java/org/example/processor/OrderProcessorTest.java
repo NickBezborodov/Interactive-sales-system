@@ -21,7 +21,6 @@ public class OrderProcessorTest {
         LocalDateTime time1 = LocalDateTime.of(2024, 1, 1, 8, 0);
         LocalDateTime time2 = LocalDateTime.of(2024, 1, 1, 9, 0);
         LocalDateTime time3 = LocalDateTime.of(2024, 1, 1, 10, 0);
-        LocalDateTime time4 = LocalDateTime.of(2024, 1, 1, 11, 0);
 
         // Заказы
         Order order1 = new Order(time1, "First", 1000);
